@@ -1,9 +1,6 @@
 {
-  "name": "comm-press/nimbus",
+  "name": "drupal/nimbus",
   "description": "A easy-to-use config hierarchy.",
-  "type": "drupal-module-custom",
-  "license": "GPL-2.0",
-  "require": {
-    "comm-press/drush_guard": "*"
-  }
+  "type": "drupal-module",
+  "license": "GPL-2.0"
 }
