@@ -2,3 +2,17 @@ services:
   nimbus.storage.staging:
     class: Drupal\Core\Config\FileStorage
     factory: Drupal\nimbus\config\FileStorageFactoryAlter::getSync
+
+  nimbus.uuid_updater:
+    class: Drupal\nimbus\UuidUpdater
+    arguments: ['@config.storage.staging','@database']
+
+  nimbus.nimbus_export:
+    class:  Drupal\nimbus\Controller\NimbusExportController
+    arguments: ['@config.storage.staging','@config.manager','@config.storage']
+  nimbus.nimbus_import:
+    class:  Drupal\nimbus\Controller\NimbusImportController
+    arguments: ['@config.storage.staging','@config.manager','@config.storage']
+  nimbus.nimbus_uuid:
+    class: Drupal\nimbus\Controller\OverrideUuidController
+    arguments: ['@nimbus.uuid_updater']

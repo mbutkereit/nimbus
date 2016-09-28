@@ -146,8 +146,6 @@ class ProxyFileStorage extends FileStorage {
   }
 
   /**
-   * Todo need implementation for override folder.
-   *
    * {@inheritdoc}
    */
   public function createCollection($collection) {
@@ -167,8 +165,6 @@ class ProxyFileStorage extends FileStorage {
   }
 
   /**
-   * Todo need a better implementation.
-   *
    * {@inheritdoc}
    */
   public function getCollectionName() {
