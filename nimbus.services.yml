@@ -1,0 +1,4 @@
+services:
+  nimbus.storage.staging:
+    class: Drupal\Core\Config\FileStorage
+    factory: Drupal\nimbus\config\FileStorageFactoryAlter::getSync

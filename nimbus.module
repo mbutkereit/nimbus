@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Contains nimbus.module.
+ */
+
+define('NIMBUS_CONFIG_OVERRIDE_DIRECTORIES', 144204);
