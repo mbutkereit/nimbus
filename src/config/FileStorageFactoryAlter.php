@@ -3,6 +3,7 @@
 namespace Drupal\nimbus\config;
 
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Config\InstallStorage;
 
 /**
  * Provides a factory for creating config file storage objects.
@@ -30,7 +31,23 @@ class FileStorageFactoryAlter {
    */
   static public function getSync() {
     global $_nimbus_config_override_directories;
-    $file_storages = [config_get_config_directory(CONFIG_SYNC_DIRECTORY)];
+    $file_storages = [];
+
+    // Module.
+    $modules = \Drupal::moduleHandler()->getModuleList();
+
+    foreach ($modules as $module) {
+      if ($module->getType() != 'profile') {
+        $extension_path = drupal_get_path($module->getType(), $name = $module->getName()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+        $file_storages[] = $extension_path;
+      }
+    }
+
+    // Profile.
+    $extension_path = drupal_get_path('profile', drupal_get_profile()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+    $file_storages[] = $extension_path;
+
+    $file_storages[] = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
     if (isset($_nimbus_config_override_directories)) {
       if (is_array($_nimbus_config_override_directories)) {
         foreach ($_nimbus_config_override_directories as $directory) {
@@ -38,6 +55,7 @@ class FileStorageFactoryAlter {
         }
       }
     }
+
     return new ProxyFileStorage($file_storages);
   }
 
