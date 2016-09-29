@@ -8,7 +8,15 @@ namespace Drupal\nimbus;
  * @package Drupal\nimbus
  */
 class ConfigChange {
+
+  /**
+   * @var array
+   */
   private $active;
+
+  /**
+   * @var array
+   */
   private $staging;
 
   /**

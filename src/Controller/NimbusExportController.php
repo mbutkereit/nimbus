@@ -126,7 +126,7 @@ class NimbusExportController {
       $source_storage = $source_storage->createCollection($collection);
       $destination_storage = $destination_storage->createCollection($collection);
       if (isset($change_list[$collection])) {
-        if(isset($change_list[$collection]['delete'])) {
+        if (isset($change_list[$collection]['delete'])) {
           foreach ($change_list[$collection]['delete'] as $name) {
             if (is_string($name)) {
               $destination_storage->delete($name);

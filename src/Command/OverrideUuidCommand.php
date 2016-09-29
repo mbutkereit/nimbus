@@ -1,11 +1,12 @@
 <?php
+
 namespace Drupal\nimbus\Controller;
+
 /**
  * @file
  */
 
 use Symfony\Component\Console\Input\InputArgument;
-use Drupal\nimbus\Controller\OverrideUuidController;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Drupal\Console\Command\ContainerAwareCommand;

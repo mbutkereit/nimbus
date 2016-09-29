@@ -3,7 +3,9 @@
 namespace Drupal\nimbus\config;
 
 use Drupal\Core\Config\FileStorage;
-use Drupal\Core\Config\InstallStorage;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\nimbus\Events\ConfigDetectionPathEvent;
+use Drupal\nimbus\NimbusEvents;
 
 /**
  * Provides a factory for creating config file storage objects.
@@ -30,33 +32,14 @@ class FileStorageFactoryAlter {
    *    Return a config file storage.
    */
   static public function getSync() {
-    global $_nimbus_config_override_directories;
-    $file_storages = [];
+    $event = new ConfigDetectionPathEvent();
+    \Drupal::service('event_dispatcher')
+      ->dispatch(NimbusEvents::ADD_PATH, $event);
 
-    // Module.
-    $modules = \Drupal::moduleHandler()->getModuleList();
+    $storage_factory = \Drupal::service('nimbus.storage_factory');
+    $proxy_file_storage = new ProxyFileStorage($event->getFileStorages(), StorageInterface::DEFAULT_COLLECTION, $storage_factory);
 
-    foreach ($modules as $module) {
-      if ($module->getType() != 'profile') {
-        $extension_path = drupal_get_path($module->getType(), $name = $module->getName()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
-        $file_storages[] = $extension_path;
-      }
-    }
-
-    // Profile.
-    $extension_path = drupal_get_path('profile', drupal_get_profile()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
-    $file_storages[] = $extension_path;
-
-    $file_storages[] = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
-    if (isset($_nimbus_config_override_directories)) {
-      if (is_array($_nimbus_config_override_directories)) {
-        foreach ($_nimbus_config_override_directories as $directory) {
-          $file_storages[] = $directory;
-        }
-      }
-    }
-
-    return new ProxyFileStorage($file_storages);
+    return $proxy_file_storage;
   }
 
 }

@@ -4,11 +4,10 @@ namespace Drupal\nimbus\config;
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\nimbus\Storage\StorageFactory;
 
 /**
  * Class ProxyFileStorage.
- *
- * Not a real proxy ... drupals bad implementation please dont't ask .....
  *
  * @package Drupal\nimbus\config
  */
@@ -24,25 +23,34 @@ class ProxyFileStorage extends FileStorage {
   /**
    * All directories.
    *
-   * @var string[]
+   * @var ConfigPath[]
    */
   private $directories;
 
   /**
+   * @var
+   */
+  private $storageFactory;
+
+  /**
    * ProxyFileStorage constructor.
    *
-   * @param string[] $directories
+   * @param ConfigPath[] $directories
    *    Array with directories.
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
    */
-  public function __construct(array $directories, $collection = StorageInterface::DEFAULT_COLLECTION) {
+  public function __construct(array $directories, $collection = StorageInterface::DEFAULT_COLLECTION, StorageFactory $storage_factory = NULL) {
     parent::__construct(config_get_config_directory(CONFIG_SYNC_DIRECTORY), $collection);
     $this->directories = $directories;
+    $this->storageFactory = $storage_factory;
     foreach ($directories as $directory) {
-      $this->fileStorages[] = new FileStorage($directory, $collection);
+      if (is_dir(((string) $directory))) {
+        $this->fileStorages[] = $this->storageFactory->create($directory, $collection);
+      }
     }
+
   }
 
   /**
@@ -87,15 +95,13 @@ class ProxyFileStorage extends FileStorage {
    * {@inheritdoc}
    */
   public function write($name, array $data) {
-    $test = $this->fileStorages;
-    $element = array_pop($test);
+    $fileStorage = $this->fileStorages;
+    $element = array_pop($fileStorage);
     $element->write($name, $data);
   }
 
   /**
-   * No Implemented because we don't want deletion.
-   *
-   * {@inheritdoc}.
+   * {@inheritdoc}
    */
   public function delete($name) {
     foreach ($this->fileStorages as $fileStorage) {
@@ -182,15 +188,9 @@ class ProxyFileStorage extends FileStorage {
    *    The current active write directories.
    */
   public function getWriteDirectories() {
-    $test = $this->directories;
-    $element = array_pop($test);
-    return $element;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function existsReturnPath($name) {
+    $directories = $this->directories;
+    $element = array_pop($directories);
+    return (string)$element;
   }
 
   /**
@@ -205,7 +205,7 @@ class ProxyFileStorage extends FileStorage {
     foreach ($this->fileStorages as $fileStorage) {
       $response = $fileStorage->exists($name);
       if ($response == TRUE) {
-        $return_value[] = $this->directories[$i];
+        $return_value[] = (string)$this->directories[$i];
       }
       $i++;
     }

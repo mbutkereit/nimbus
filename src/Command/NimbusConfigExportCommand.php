@@ -1,5 +1,7 @@
 <?php
+
 namespace Drupal\nimbus\Command;
+
 /**
  * @file
  */
