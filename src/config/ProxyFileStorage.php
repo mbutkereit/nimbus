@@ -155,7 +155,7 @@ class ProxyFileStorage extends FileStorage {
    * {@inheritdoc}
    */
   public function createCollection($collection) {
-    return new ProxyFileStorage($this->directories, $collection);
+    return new ProxyFileStorage($this->directories, $collection, $this->storageFactory);
   }
 
   /**
