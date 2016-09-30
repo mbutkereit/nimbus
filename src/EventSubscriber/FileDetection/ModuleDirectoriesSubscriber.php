@@ -54,7 +54,7 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[NimbusEvents::ADD_PATH][] = ['onPreCreateFileConfigManager', 20];
+    $events[NimbusEvents::ADD_PATH][] = ['onPreCreateFileConfigManager', 10];
     return $events;
   }
 
