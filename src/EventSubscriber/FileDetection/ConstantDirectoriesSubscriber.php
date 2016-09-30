@@ -23,8 +23,6 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
     global $_nimbus_config_override_directories;
     $file_storages = [];
 
-    $file_storages[] = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
-
     if (isset($_nimbus_config_override_directories)) {
       if (is_array($_nimbus_config_override_directories)) {
         foreach ($_nimbus_config_override_directories as $directory) {
@@ -33,6 +31,8 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
       }
     }
 
+    $file_storages[] = new ConfigPath(config_get_config_directory(CONFIG_SYNC_DIRECTORY));
+
     $event->addFileStorage($file_storages);
   }
 
@@ -40,7 +40,7 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    $events[NimbusEvents::ADD_PATH][] = ['onPreCreateFileConfigManager', 1];
+    $events[NimbusEvents::ADD_PATH][] = ['onPreCreateFileConfigManager', 90];
     return $events;
   }
 
