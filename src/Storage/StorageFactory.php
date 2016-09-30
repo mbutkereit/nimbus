@@ -27,7 +27,7 @@ class StorageFactory {
    * @return \Drupal\Core\Config\StorageInterface
    */
   public function create($directory, $collection) {
-    return new FileStorage((string)$directory, $collection);
+    return new FileStorage((string) $directory, $collection);
   }
 
 }
