@@ -190,7 +190,7 @@ class ProxyFileStorage extends FileStorage {
   public function getWriteDirectories() {
     $directories = $this->directories;
     $element = array_pop($directories);
-    return (string)$element;
+    return (string) $element;
   }
 
   /**
@@ -205,7 +205,7 @@ class ProxyFileStorage extends FileStorage {
     foreach ($this->fileStorages as $fileStorage) {
       $response = $fileStorage->exists($name);
       if ($response == TRUE) {
-        $return_value[] = (string)$this->directories[$i];
+        $return_value[] = (string) $this->directories[$i];
       }
       $i++;
     }

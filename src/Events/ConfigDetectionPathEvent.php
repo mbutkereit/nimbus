@@ -5,7 +5,6 @@ namespace Drupal\nimbus\Events;
 /**
  * @file
  */
-use Drupal\nimbus\config\ConfigPath;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
