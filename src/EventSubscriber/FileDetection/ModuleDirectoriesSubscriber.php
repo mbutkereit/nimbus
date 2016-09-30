@@ -40,8 +40,20 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
 
     $modules = $this->moduleHandler->getModuleList();
 
+    // Get an array of modules to ignore.
+    global $_nimbus_config_ignore_modules;
+
+    // Make sure we're dealing with an empty array if no modules are configured
+    // to be ignored.
+    if (isset($_nimbus_config_ignore_modules)) {
+      if (!(is_array($_nimbus_config_ignore_modules))) {
+        $_nimbus_config_ignore_modules = [];
+      }
+    }
+
     foreach ($modules as $module) {
-      if ($module->getType() != 'profile') {
+      // Exclude profile as well as ignored modules and add other modules as configuration sources.
+      if (($module->getType() != 'profile') && (!(in_array($module->getName(), $_nimbus_config_ignore_modules)))) {
         $extension_path = $this->drupalGetPath($module->getType(), $module->getName()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
         $file_storages[] = new ConfigPath($extension_path);
       }
