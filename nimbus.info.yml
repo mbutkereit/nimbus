@@ -2,4 +2,3 @@ name: 'Nimbus'
 type: module
 description: A config extension.
 core: 8.x
-package: Logging
