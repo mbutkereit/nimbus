@@ -25,12 +25,3 @@ services:
     class: Drupal\nimbus\EventSubscriber\FileDetection\ConstantDirectoriesSubscriber
     tags:
       - { name: event_subscriber }
-  nimbus.file_detection.module:
-    class: Drupal\nimbus\EventSubscriber\FileDetection\ModuleDirectoriesSubscriber
-    arguments: ['@module_handler']
-    tags:
-      - { name: event_subscriber }
-  nimbus.file_detection.profile:
-    class: Drupal\nimbus\EventSubscriber\FileDetection\ProfileDirectorySubscriber
-    tags:
-      - { name: event_subscriber }
