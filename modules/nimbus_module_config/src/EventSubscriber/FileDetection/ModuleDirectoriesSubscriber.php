@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\nimbus\EventSubscriber\FileDetection;
+namespace Drupal\nimbus_module_config\EventSubscriber\FileDetection;
 
 use Drupal\Core\Config\InstallStorage;
 use Drupal\nimbus\config\ConfigPath;
