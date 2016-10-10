@@ -73,15 +73,18 @@ class NimbusImportController {
     $this->createTable($change_list, $output);
     $helper = new QuestionHelper();
 
-    $question = new ConfirmationQuestion('Import the listed configuration changes?.', FALSE);
+    $question = new ConfirmationQuestion("Import the listed configuration changes? \n(y/n) ", FALSE);
     try {
       $value = $input->getArgument('accept');
-      $input->setInteractive(!$value);
+      if ($input->isInteractive()) {
+        $input->setInteractive(!$value);
+      }
     }
     catch (\Exception $e) {
-      $input->setInteractive(TRUE);
+      $input->setInteractive(FALSE);
     }
-    if (!$helper->ask($input, $output, $question)) {
+    $answer = $helper->ask($input, $output, $question);
+    if ($answer) {
       $config_importer = new ConfigImporter(
         $storage_comparer,
         \Drupal::service('event_dispatcher'),
