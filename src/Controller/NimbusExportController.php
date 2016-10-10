@@ -23,7 +23,7 @@ class NimbusExportController {
   /**
    * @var \Drupal\Core\Config\FileStorage
    */
-  private $configTarget;
+  protected $configTarget;
   /**
    * @var \Drupal\Core\Config\ConfigManager
    */
@@ -81,7 +81,9 @@ class NimbusExportController {
     $this->createTable($change_list, $output);
     $helper = new QuestionHelper();
 
-    $question = new ConfirmationQuestion('The .yml files in your export directory (!target) will be deleted and replaced with the active config.', array('!target' => $this->configTarget->getWriteDirectories()), FALSE);
+    $configTarget = $this->configTarget;
+
+    $question = new ConfirmationQuestion('The .yml files in your export directory (' . $this->configTarget->getWriteDirectories() . ") will be deleted and replaced with the active config. \n(y/n) ", FALSE);
     try {
       $value = $input->getArgument('accept');
       if ($input->isInteractive()) {
@@ -144,7 +146,7 @@ class NimbusExportController {
       }
     }
 
-    $output->writeln('Configuration successfully exported to !target.', ['!target' => 'todo']);
+    $output->writeln('Configuration successfully exported to '. $this->configTarget->getWriteDirectories() . ". \n");
 
     return $result;
   }
