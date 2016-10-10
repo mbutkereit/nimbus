@@ -43,10 +43,10 @@ class ProxyFileStorage extends FileStorage {
    */
   public function __construct(array $directories, $collection = StorageInterface::DEFAULT_COLLECTION, StorageFactory $storage_factory = NULL) {
     parent::__construct(config_get_config_directory(CONFIG_SYNC_DIRECTORY), $collection);
-    $this->directories = $directories;
     $this->storageFactory = $storage_factory;
     foreach ($directories as $directory) {
       if (is_dir(((string) $directory))) {
+        $this->directories[] = $directory;
         $this->fileStorages[] = $this->storageFactory->create($directory, $collection);
       }
     }
@@ -209,7 +209,7 @@ class ProxyFileStorage extends FileStorage {
       }
       $i++;
     }
-    return implode(',', $return_value);
+    return implode("\n", $return_value);
   }
 
 }
