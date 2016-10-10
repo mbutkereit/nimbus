@@ -1,6 +1,6 @@
 {
   "name": "drupal/nimbus",
-  "description": "A easy-to-use config hierarchy.",
+  "description": "An easy-to-use config hierarchy.",
   "type": "drupal-module",
   "license": "GPL-2.0"
 }

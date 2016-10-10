@@ -45,10 +45,8 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
 
     // Make sure we're dealing with an empty array if no modules are configured
     // to be ignored.
-    if (isset($_nimbus_config_ignore_modules)) {
-      if (!(is_array($_nimbus_config_ignore_modules))) {
-        $_nimbus_config_ignore_modules = [];
-      }
+    if ((!(isset($_nimbus_config_ignore_modules))) && (!(is_array($_nimbus_config_ignore_modules)))) {
+      $_nimbus_config_ignore_modules = [];
     }
 
     foreach ($modules as $module) {
