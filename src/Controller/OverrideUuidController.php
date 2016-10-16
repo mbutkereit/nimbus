@@ -10,24 +10,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
+ * Class OverrideUuidController.
  *
+ * @package Drupal\nimbus\Controller
  */
 class OverrideUuidController {
 
   /**
+   * The uuid updater.
+   *
    * @var \Drupal\nimbus\UuidUpdaterInterface
    */
   private $uuidUpdater;
 
   /**
+   * OverrideUuidController constructor.
    *
+   * @param \Drupal\nimbus\UuidUpdaterInterface $uuid_updater
+   *    The uuid updater.
    */
   public function __construct(UuidUpdaterInterface $uuid_updater) {
     $this->uuidUpdater = $uuid_updater;
   }
 
   /**
+   * A command to update uuids.
    *
+   * @param \Symfony\Component\Console\Input\InputInterface $input
+   *    The Symfony console input.
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
+   *    The Symfony console output.
+   *
+   * @return bool
+   *    Return false if something went wrong otherwise no return value.
    */
   public function uuidUpdateCommand(InputInterface $input, OutputInterface $output) {
     $result = $this->uuidUpdater->getEntries();

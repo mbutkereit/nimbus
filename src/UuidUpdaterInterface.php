@@ -20,8 +20,10 @@ interface UuidUpdaterInterface {
    * Filter a array of config entries.
    *
    * @param \Drupal\nimbus\ConfigChange[] $entries
+   *    The array of config changes that should filtered.
    *
    * @return \Drupal\nimbus\ConfigChange[]
+   *    The filtered config change array.
    */
   public function filterEntries(array $entries);
 
@@ -29,6 +31,7 @@ interface UuidUpdaterInterface {
    * Return a array of ConfigChange objects.
    *
    * @return \Drupal\nimbus\ConfigChange[]
+   *    The config change objects.
    */
   public function getEntries();
 

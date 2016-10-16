@@ -49,7 +49,15 @@ class NimbusImportController {
   }
 
   /**
+   * The configuration import.
    *
+   * @param \Symfony\Component\Console\Input\InputInterface $input
+   *   Input object.
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
+   *   Output object.
+   *
+   * @return bool
+   *    Return false if something went wrong otherwise no return value.
    */
   public function configurationImport(InputInterface $input, OutputInterface $output) {
     $output->writeln('Overriden Import');
@@ -121,7 +129,7 @@ class NimbusImportController {
    * @param mixed $rows
    *    Rows array from the diff.
    */
-  function createTable($rows, OutputInterface $output) {
+  protected function createTable($rows, OutputInterface $output) {
     $file_storage = \Drupal::service('config.storage.staging');
     if ($file_storage instanceof ProxyFileStorage) {
       $table = new Table($output);

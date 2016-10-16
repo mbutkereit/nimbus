@@ -28,7 +28,9 @@ class ProxyFileStorage extends FileStorage {
   private $directories;
 
   /**
-   * @var
+   * The storage factory.
+   *
+   * @var StorageFactory
    */
   private $storageFactory;
 
@@ -71,10 +73,12 @@ class ProxyFileStorage extends FileStorage {
    */
   public function read($name) {
     $response = FALSE;
-    foreach ($this->fileStorages as $fileStorage) {
-      $read = $fileStorage->read($name);
-      if ($read != FALSE) {
-        $response = $read;
+    foreach ($this->fileStorages as $key => $fileStorage) {
+      if ($this->directories[$key]->hasReadPermission($name)) {
+        $read = $fileStorage->read($name);
+        if ($read != FALSE) {
+          $response = $read;
+        }
       }
     }
     return $response;
@@ -85,8 +89,10 @@ class ProxyFileStorage extends FileStorage {
    */
   public function readMultiple(array $names) {
     $list = [];
-    foreach ($this->fileStorages as $fileStorage) {
-      $list = $fileStorage->readMultiple($names) + $list;
+    foreach ($this->fileStorages as $key => $fileStorage) {
+      if ($this->directories[$key]->hasReadPermission($names)) {
+        $list = $fileStorage->readMultiple($names) + $list;
+      }
     }
     return $list;
   }
@@ -95,17 +101,22 @@ class ProxyFileStorage extends FileStorage {
    * {@inheritdoc}
    */
   public function write($name, array $data) {
-    $fileStorage = $this->fileStorages;
-    $element = array_pop($fileStorage);
-    $element->write($name, $data);
+    $directories = $this->directories;
+    foreach (array_reverse($directories, TRUE) as $key => $element) {
+      if ($element->hasWritePermission($name, $data)) {
+        $this->fileStorages[$key]->write($name, $data);
+        return;
+      }
+    }
+    throw new \Exception('No Validate directory found');
   }
 
   /**
    * {@inheritdoc}
    */
   public function delete($name) {
-    foreach ($this->fileStorages as $fileStorage) {
-      if ($fileStorage->exists($name)) {
+    foreach ($this->fileStorages as $key => $fileStorage) {
+      if ($fileStorage->exists($name) && $this->directories[$key]->hasDeletePermission($name)) {
         $fileStorage->delete($name);
       }
     }
@@ -189,7 +200,12 @@ class ProxyFileStorage extends FileStorage {
    */
   public function getWriteDirectories() {
     $directories = $this->directories;
-    $element = array_pop($directories);
+    do {
+      if (count($directories) < 0) {
+        throw new \Exception('No directory defined');
+      }
+      $element = array_pop($directories);
+    } while (!$element->hasWritePermission(NULL, []));
     return (string) $element;
   }
 

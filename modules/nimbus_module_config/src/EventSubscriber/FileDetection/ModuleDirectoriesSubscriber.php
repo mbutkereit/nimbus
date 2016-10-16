@@ -10,15 +10,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 
 /**
- * @file
- */
-
-/**
+ * Class ModuleDirectoriesSubscriber.
  *
+ * @package Drupal\nimbus_module_config\EventSubscriber\FileDetection
  */
 class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
 
   /**
+   * The module handler service.
+   *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
@@ -27,13 +27,17 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
    * ModuleDirectoriesSubscriber constructor.
    *
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *    The module handler service.
    */
   public function __construct(ModuleHandlerInterface $module_handler) {
     $this->moduleHandler = $module_handler;
   }
 
   /**
+   * Create for each module a configPath.
    *
+   * @param \Drupal\nimbus\Events\ConfigDetectionPathEvent $event
+   *    The event object.
    */
   public function onPreCreateFileConfigManager(ConfigDetectionPathEvent $event) {
     $file_storages = [];
@@ -50,7 +54,8 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
     }
 
     foreach ($modules as $module) {
-      // Exclude profile as well as ignored modules and add other modules as configuration sources.
+      // Exclude profile as well as ignored modules and
+      // add other modules as configuration sources.
       if (($module->getType() != 'profile') && (!(in_array($module->getName(), $_nimbus_config_ignore_modules)))) {
         $extension_path = $this->drupalGetPath($module->getType(), $module->getName()) . '/' . InstallStorage::CONFIG_INSTALL_DIRECTORY;
         $file_storages[] = new ConfigPath($extension_path);
@@ -71,10 +76,10 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
   /**
    * Wrapper for drupal_get_path().
    *
-   * @param $type
+   * @param string $type
    *   The type of the item; one of 'core', 'profile', 'module', 'theme', or
    *   'theme_engine'.
-   * @param $name
+   * @param string $name
    *   The name of the item for which the path is requested. Ignored for
    *   $type 'core'.
    *
