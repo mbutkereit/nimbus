@@ -22,15 +22,21 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class NimbusImportController {
 
   /**
+   * The config target.
+   *
    * @var \Drupal\Core\Config\StorageInterface
    */
   private $configTarget;
   /**
+   * The config manager.
+   *
    * @var \Drupal\Core\Config\ConfigManagerInterface
    */
   private $configManager;
 
   /**
+   * The config active.
+   *
    * @var \Drupal\Core\Config\StorageInterface
    */
   private $configActive;
@@ -39,8 +45,11 @@ class NimbusImportController {
    * NimbusExportController constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $config_target
+   *   The target config storage.
    * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
+   *    The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
+   *   The active config storage.
    */
   public function __construct(StorageInterface $config_target, ConfigManagerInterface $config_manager, StorageInterface $config_active) {
     $this->configTarget = $config_target;

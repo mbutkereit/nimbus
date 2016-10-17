@@ -10,13 +10,6 @@ namespace Drupal\nimbus\config;
 class ConfigPathWithPermission extends ConfigPath implements ConfigPathPermissionInterface {
 
   /**
-   * The permissions array.
-   *
-   * @var array
-   */
-  private $permission;
-
-  /**
    * ConfigPathWithPermission constructor.
    *
    * @param string $config_path
@@ -30,18 +23,18 @@ class ConfigPathWithPermission extends ConfigPath implements ConfigPathPermissio
    */
   public function __construct($config_path, $readPermission = FALSE, $writePermission = FALSE, $deletePermission = FALSE) {
     parent::__construct($config_path);
-    $this->permission['read'] = $readPermission;
-    $this->permission['write'] = $writePermission;
-    $this->permission['delete'] = $deletePermission;
+    $this->addAdditionalInformation('read', $readPermission);
+    $this->addAdditionalInformation('write', $writePermission);
+    $this->addAdditionalInformation('delete', $deletePermission);
   }
 
   /**
    * {@inheritdoc}
    */
   public function hasReadPermission($name) {
-    $response = $this->permission['read'];
-    if ($this->permission['read'] instanceof \Closure) {
-      $response = $this->permission['read']($name);
+    $response = $this->getAdditionalInformationByKey('read');
+    if ($response instanceof \Closure) {
+      $response = $response($name);
     }
     return $response;
   }
@@ -49,10 +42,10 @@ class ConfigPathWithPermission extends ConfigPath implements ConfigPathPermissio
   /**
    * {@inheritdoc}
    */
-  public function hasWritePermission($name, array $data) {
-    $response = $this->permission['write'];
-    if ($this->permission['write'] instanceof \Closure) {
-      $response = $this->permission['write']($name);
+  public function hasWritePermission($name, array &$data) {
+    $response = $this->getAdditionalInformationByKey('write');
+    if ($response instanceof \Closure) {
+      $response = $response($name);
     }
     return $response;
   }
@@ -61,9 +54,9 @@ class ConfigPathWithPermission extends ConfigPath implements ConfigPathPermissio
    * {@inheritdoc}
    */
   public function hasDeletePermission($name) {
-    $response = $this->permission['delete'];
-    if ($this->permission['delete'] instanceof \Closure) {
-      $response = $this->permission['delete']($name);
+    $response = $this->getAdditionalInformationByKey('delete');
+    if ($response instanceof \Closure) {
+      $response = $response($name);
     }
     return $response;
   }

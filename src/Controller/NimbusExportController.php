@@ -19,19 +19,28 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class NimbusExportController {
   /**
-   * @var
+   * The file storage.
+   *
+   * @var ProxyFileStorage
    */
   private $fileStorage;
   /**
-   * @var \Drupal\Core\Config\FileStorage
+   * The config target.
+   *
+   * @var \Drupal\Core\Config\StorageInterface
    */
-  protected $configTarget;
+  private $configTarget;
   /**
-   * @var \Drupal\Core\Config\ConfigManager
+   * The config manager.
+   *
+   * @var \Drupal\Core\Config\ConfigManagerInterface
    */
   private $configManager;
+
   /**
-   * @var \Drupal\Core\Config\CachedStorage
+   * The config active.
+   *
+   * @var \Drupal\Core\Config\StorageInterface
    */
   private $configActive;
 
@@ -39,8 +48,11 @@ class NimbusExportController {
    * NimbusExportController constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $config_target
+   *   The target config storage.
    * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
+   *    The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
+   *   The active config storage.
    */
   public function __construct(StorageInterface $config_target, ConfigManagerInterface $config_manager, StorageInterface $config_active) {
     $this->configTarget = $config_target;
@@ -51,14 +63,12 @@ class NimbusExportController {
   /**
    * Configuration Export.
    *
-   * @param string $destination
-   *    The destination.
-   * @param string $destination_dir
-   *    The destination dir.
-   * @param string $branch
-   *    The branch.
+   * @param \Symfony\Component\Console\Input\InputInterface $input
+   *   Input object.
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
+   *   Output object.
    *
-   * @return array|bool
+   * @return array
    *    Return successfull or not
    */
   public function configurationExport(InputInterface $input, OutputInterface $output) {
@@ -154,8 +164,12 @@ class NimbusExportController {
   }
 
   /**
-   * @param $rows
+   * Create a Table.
+   *
+   * @param array $rows
+   *    The rows of the table.
    * @param \Symfony\Component\Console\Output\OutputInterface $output
+   *    The symfony console output.
    */
   public function createTable($rows, OutputInterface $output) {
     $file_storage = $this->fileStorage;

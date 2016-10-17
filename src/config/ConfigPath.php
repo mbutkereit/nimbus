@@ -56,6 +56,19 @@ class ConfigPath implements ConfigPathPermissionInterface {
   }
 
   /**
+   * Getter for the additionalInformation store.
+   *
+   * @param string $key
+   *    The key from that you want the value.
+   *
+   * @return mixed|null
+   *    Return the value behind the key or if the not exist null.
+   */
+  public function getAdditionalInformationByKey($key) {
+    return isset($this->additionalInformation[$key]) ? $this->additionalInformation[$key] : NULL;
+  }
+
+  /**
    * Magic to string method.
    *
    * @return string
@@ -75,7 +88,7 @@ class ConfigPath implements ConfigPathPermissionInterface {
   /**
    * {@inheritdoc}
    */
-  public function hasWritePermission($name, array $data) {
+  public function hasWritePermission($name, array &$data) {
     return TRUE;
   }
 

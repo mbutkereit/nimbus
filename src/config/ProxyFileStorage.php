@@ -200,12 +200,13 @@ class ProxyFileStorage extends FileStorage {
    */
   public function getWriteDirectories() {
     $directories = $this->directories;
+    $empty_array = [];
     do {
       if (count($directories) < 0) {
         throw new \Exception('No directory defined');
       }
       $element = array_pop($directories);
-    } while (!$element->hasWritePermission(NULL, []));
+    } while (!$element->hasWritePermission(NULL, $empty_array));
     return (string) $element;
   }
 
