@@ -63,12 +63,17 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
               if (isset($directory['deletePermission'])) {
                 $deletePermission = $directory['deletePermission'];
               }
-              $file_storages[] = new ConfigPathWithPermission(
+              $storage_element = new ConfigPathWithPermission(
                 $directory['path'],
                 $readPermission,
                 $writePermission,
                 $deletePermission
               );
+              if (isset($directory['class'])) {
+                $storage_element->addAdditionalInformation('class', $directory['class']);
+              }
+
+              $file_storages[] = $storage_element;
             }
           }
           elseif ($directory instanceof ConfigPath) {
