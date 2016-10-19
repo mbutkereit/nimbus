@@ -9,16 +9,17 @@ use Drupal\nimbus\NimbusEvents;
 use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @file
- */
-
-/**
+ * Class ProfileDirectorySubscriber.
  *
+ * @package Drupal\nimbus_profile_config\EventSubscriber\FileDetection
  */
 class ProfileDirectorySubscriber implements EventSubscriberInterface {
 
   /**
+   * Add the active profile to the ConfigPath array.
    *
+   * @param \Drupal\nimbus\Events\ConfigDetectionPathEvent $event
+   *    The event object.
    */
   public function onPreCreateFileConfigManager(ConfigDetectionPathEvent $event) {
     $file_storages = [];
@@ -40,10 +41,10 @@ class ProfileDirectorySubscriber implements EventSubscriberInterface {
   /**
    * Wrapper for drupal_get_path().
    *
-   * @param $type
+   * @param string $type
    *   The type of the item; one of 'core', 'profile', 'module', 'theme', or
    *   'theme_engine'.
-   * @param $name
+   * @param string $name
    *   The name of the item for which the path is requested. Ignored for
    *   $type 'core'.
    *

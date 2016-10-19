@@ -10,11 +10,15 @@ namespace Drupal\nimbus;
 class ConfigChange {
 
   /**
+   * The active config array.
+   *
    * @var array
    */
   private $active;
 
   /**
+   * The staging config array.
+   *
    * @var array
    */
   private $staging;
@@ -28,21 +32,27 @@ class ConfigChange {
   }
 
   /**
+   * Getter for staging config.
    *
+   * @return array
    */
   public function getStagingConfig() {
     return $this->staging;
   }
 
   /**
+   * Getter for active config.
    *
+   * @return array
    */
   public function getActiveConfig() {
     return $this->active;
   }
 
   /**
+   * Getter for active uuid.
    *
+   * @return bool|string
    */
   public function getActiveUuid() {
     if (isset($this->active['uuid'])) {
@@ -52,7 +62,9 @@ class ConfigChange {
   }
 
   /**
+   * Getter for staging uuid.
    *
+   * @return bool|string
    */
   public function getStagingUuid() {
     if (isset($this->staging['uuid'])) {

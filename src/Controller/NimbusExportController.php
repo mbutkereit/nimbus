@@ -13,7 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
+ * Class NimbusExportController.
  *
+ * @package Drupal\nimbus\Controller
  */
 class NimbusExportController {
   /**
@@ -146,13 +148,14 @@ class NimbusExportController {
       }
     }
 
-    $output->writeln('Configuration successfully exported to '. $this->configTarget->getWriteDirectories() . ". \n");
+    $output->writeln('Configuration successfully exported to ' . $this->configTarget->getWriteDirectories() . ". \n");
 
     return $result;
   }
 
   /**
-   *
+   * @param $rows
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
    */
   public function createTable($rows, OutputInterface $output) {
     $file_storage = $this->fileStorage;
