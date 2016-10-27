@@ -30,6 +30,7 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
    *            (optional)readPermission = true // only true or false.
    *            (optional)writePermission = true // only true or false.
    *            (optional)deletePermission = true // only true or false.
+   *            (optional)class = '' // A class string or a closure.
    *         ]
    *      ]
    *     - A simple path string.
