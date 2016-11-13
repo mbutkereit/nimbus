@@ -22,15 +22,21 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class NimbusImportController {
 
   /**
+   * The config target.
+   *
    * @var \Drupal\Core\Config\StorageInterface
    */
   private $configTarget;
   /**
+   * The config manager.
+   *
    * @var \Drupal\Core\Config\ConfigManagerInterface
    */
   private $configManager;
 
   /**
+   * The config active.
+   *
    * @var \Drupal\Core\Config\StorageInterface
    */
   private $configActive;
@@ -39,8 +45,11 @@ class NimbusImportController {
    * NimbusExportController constructor.
    *
    * @param \Drupal\Core\Config\StorageInterface $config_target
+   *   The target config storage.
    * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
+   *    The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
+   *   The active config storage.
    */
   public function __construct(StorageInterface $config_target, ConfigManagerInterface $config_manager, StorageInterface $config_active) {
     $this->configTarget = $config_target;
@@ -80,18 +89,23 @@ class NimbusImportController {
     }
     $this->createTable($change_list, $output);
     $helper = new QuestionHelper();
-
-    $question = new ConfirmationQuestion("Import the listed configuration changes? \n(y/n) ", FALSE);
-    try {
-      $value = $input->getArgument('accept');
-      if ($input->isInteractive()) {
-        $input->setInteractive(!$value);
+    if (!$input->getArgument('accept')) {
+      $question = new ConfirmationQuestion("Import the listed configuration changes? \n(y/n) ", FALSE);
+      try {
+        $value = $input->getArgument('accept');
+        if ($input->isInteractive()) {
+          $input->setInteractive(!$value);
+        }
       }
+      catch (\Exception $e) {
+        $input->setInteractive(FALSE);
+      }
+      $answer = $helper->ask($input, $output, $question);
     }
-    catch (\Exception $e) {
-      $input->setInteractive(FALSE);
+    else {
+      $answer = TRUE;
     }
-    $answer = $helper->ask($input, $output, $question);
+
     if ($answer) {
       $config_importer = new ConfigImporter(
         $storage_comparer,

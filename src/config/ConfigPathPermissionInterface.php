@@ -31,7 +31,7 @@ interface ConfigPathPermissionInterface {
    * @return bool
    *    Has permission true or has no permission false.
    */
-  public function hasWritePermission($name, array $data);
+  public function hasWritePermission($name, array &$data);
 
   /**
    * Validate the delete permission.
