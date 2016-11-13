@@ -105,9 +105,12 @@ class NimbusExportController {
     catch (\Exception $e) {
       $input->setInteractive(FALSE);
     }
-    if (!$helper->ask($input, $output, $question)) {
-      $output->writeln('Aborted !');
-      return FALSE;
+
+    if (!$input->getArgument('accept')) {
+      if (!$helper->ask($input, $output, $question)) {
+        $output->writeln('Aborted !');
+        return FALSE;
+      }
     }
 
     // Write all .yml files.
@@ -160,7 +163,6 @@ class NimbusExportController {
 
     $output->writeln('Configuration successfully exported to ' . $this->configTarget->getWriteDirectories() . ". \n");
 
-    return $result;
   }
 
   /**
