@@ -62,6 +62,8 @@ class DevelopmentStorage extends FileStorage {
    *
    * @param string $module_name
    *    The module name.
+   * @param string $weight
+   *    The weight.
    */
   public function addModuleToBlacklist($module_name, $weight) {
     $this->modules[$module_name] = $weight;

@@ -15,7 +15,7 @@ class FileStorageFactoryAlter {
   /**
    * Returns a FileStorage object working with the active config directory.
    *
-   * @return \Drupal\Core\Config\FileStorage FileStorage
+   * @return \Drupal\Core\Config\FileStorage
    *    Return a config file storage.
    *
    * @deprecated in Drupal 8.0.x and will be removed before 9.0.0. Drupal core
@@ -28,7 +28,7 @@ class FileStorageFactoryAlter {
   /**
    * Returns a FileStorage object working with the sync config directory.
    *
-   * @return \Drupal\Core\Config\FileStorage FileStorage
+   * @return \Drupal\Core\Config\FileStorage
    *    Return a config file storage.
    */
   static public function getSync() {
