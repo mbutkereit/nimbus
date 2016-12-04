@@ -142,6 +142,8 @@ class NimbusImportController {
    *
    * @param mixed $rows
    *    Rows array from the diff.
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
+   *    The symfony console output object.
    */
   protected function createTable($rows, OutputInterface $output) {
     $file_storage = \Drupal::service('config.storage.staging');

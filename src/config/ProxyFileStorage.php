@@ -42,6 +42,8 @@ class ProxyFileStorage extends FileStorage {
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
+   * @param \Drupal\nimbus\Storage\StorageFactory $storage_factory
+   *   (optional) The storage factory to create a new storage. Defaults to NULL.
    */
   public function __construct(array $directories, $collection = StorageInterface::DEFAULT_COLLECTION, StorageFactory $storage_factory = NULL) {
     parent::__construct(config_get_config_directory(CONFIG_SYNC_DIRECTORY), $collection);
@@ -103,6 +105,7 @@ class ProxyFileStorage extends FileStorage {
   public function write($name, array $data) {
     $directories = $this->directories;
     foreach (array_reverse($directories, TRUE) as $key => $element) {
+      /** @var \Drupal\nimbus\config\ConfigPathPermissionInterface $element */
       if ($element->hasWritePermission($name, $data)) {
         $this->fileStorages[$key]->write($name, $data);
         return;
@@ -197,6 +200,9 @@ class ProxyFileStorage extends FileStorage {
    *
    * @return string
    *    The current active write directories.
+   *
+   * @throws \Exception
+   *    If the number of active write directories is less than 0.
    */
   public function getWriteDirectories() {
     $directories = $this->directories;
@@ -213,8 +219,11 @@ class ProxyFileStorage extends FileStorage {
   /**
    * Returns the path to the configuration file.
    *
+   * @param string $name
+   *    The name of the configuration file.
+   *
    * @return string
-   *   The path to the configuration file.
+   *    The path to the configuration file.
    */
   public function getFilePath($name) {
     $i = 0;

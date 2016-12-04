@@ -69,7 +69,7 @@ class NimbusExportController {
    *   Output object.
    *
    * @return array
-   *    Return successfull or not
+   *    Return successful or not
    */
   public function configurationExport(InputInterface $input, OutputInterface $output) {
     $output->writeln('Override Export');
