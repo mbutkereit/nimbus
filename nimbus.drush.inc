@@ -70,10 +70,14 @@ function nimbus_override_ids() {
  */
 function nimbus_drush_export($destination = NULL) {
   $output = new ConsoleOutput();
-  $input = new ArrayInput(['accept' => TRUE], new InputDefinition([new InputArgument('accept', InputArgument::OPTIONAL)]));
+  $input_definition = new InputDefinition([new InputArgument('accept', InputArgument::OPTIONAL)]);
+  $input = new ArrayInput(['accept' => TRUE], $input_definition);
   $input->setArgument('accept', drush_get_option('yes') ?: FALSE);
-  $service = \Drupal::getContainer()->get('nimbus.nimbus_export');
-  return $service->configurationExport($input, $output);
+
+  /** @var \Drupal\nimbus\Command\NimbusConfigExportCommand $command */
+  $command = \Drupal::getContainer()->get('nimbus.config_export_command');
+
+  return $command->run($input, $output);
 }
 
 /**

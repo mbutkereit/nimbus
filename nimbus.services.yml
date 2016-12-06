@@ -7,9 +7,6 @@ services:
     class: Drupal\nimbus\UuidUpdater
     arguments: ['@config.storage.staging','@database']
 
-  nimbus.nimbus_export:
-    class:  Drupal\nimbus\Controller\NimbusExportController
-    arguments: ['@config.storage.staging','@config.manager','@config.storage']
   nimbus.nimbus_import:
     class:  Drupal\nimbus\Controller\NimbusImportController
     arguments: ['@config.storage.staging','@config.manager','@config.storage']
@@ -17,11 +14,35 @@ services:
     class: Drupal\nimbus\Controller\OverrideUuidController
     arguments: ['@nimbus.uuid_updater']
 
+  nimbus.storage_comparer:
+    class: Drupal\Core\Config\StorageComparer
+    factory: ['@nimbus.storage_comparer_factory', create]
+    arguments: ['@config.storage', '@config.storage.staging', '@config.manager']
+
+  nimbus.storage_comparer_factory:
+    class: Drupal\nimbus\Storage\StorageComparerFactory
 
   nimbus.storage_factory:
     class: Drupal\nimbus\Storage\StorageFactory
+
+  nimbus.question_factory:
+    class: Drupal\nimbus\Service\Question\QuestionFactory
+
+  nimbus.config_exporter:
+    class: Drupal\nimbus\Service\NimbusConfigExporter
+    arguments: ['@nimbus.storage_comparer']
 
   nimbus.file_detection.constant:
     class: Drupal\nimbus\EventSubscriber\FileDetection\ConstantDirectoriesSubscriber
     tags:
       - { name: event_subscriber }
+
+  nimbus.config_export_command:
+    class: Drupal\nimbus\Command\NimbusConfigExportCommand
+    arguments:
+      - '@nimbus.config_exporter'
+      - '@nimbus.question_factory'
+      - '@config.storage'
+      - '@config.storage.staging'
+    tags:
+      - { name: console.command }
