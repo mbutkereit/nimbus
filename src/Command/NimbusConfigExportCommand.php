@@ -2,6 +2,7 @@
 
 namespace Drupal\nimbus\Command;
 
+use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Core\Config\StorageInterface;
 use Drupal\nimbus\config\ProxyFileStorage;
 use Drupal\nimbus\Service\NimbusConfigExporterInterface;
@@ -18,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package Drupal\nimbus\Command
  */
 class NimbusConfigExportCommand extends Command {
+
+  use ContainerAwareCommandTrait;
 
   /**
    * The configuration exporter service.
@@ -76,6 +79,8 @@ class NimbusConfigExportCommand extends Command {
     $this->questionFactory = $question_factory;
     $this->configActive = $config_active;
     $this->configTarget = $config_target;
+
+    parent::__construct();
   }
 
   /**

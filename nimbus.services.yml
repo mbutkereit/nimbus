@@ -45,4 +45,4 @@ services:
       - '@config.storage'
       - '@config.storage.staging'
     tags:
-      - { name: console.command }
+      - { name: drupal.command }
