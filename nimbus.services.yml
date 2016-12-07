@@ -28,6 +28,9 @@ services:
   nimbus.question_factory:
     class: Drupal\nimbus\Service\Question\QuestionFactory
 
+  nimbus.drupal_style_factory:
+    class: Drupal\nimbus\Service\DrupalStyleFactory
+
   nimbus.config_exporter:
     class: Drupal\nimbus\Service\NimbusConfigExporter
     arguments: ['@nimbus.storage_comparer']
@@ -40,8 +43,9 @@ services:
   nimbus.config_export_command:
     class: Drupal\nimbus\Command\NimbusConfigExportCommand
     arguments:
-      - '@nimbus.config_exporter'
       - '@nimbus.question_factory'
+      - '@nimbus.drupal_style_factory'
+      - '@nimbus.config_exporter'
       - '@config.storage'
       - '@config.storage.staging'
     tags:

@@ -3,8 +3,10 @@
 namespace Drupal\nimbus\Command;
 
 use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Style\DrupalStyle;
 use Drupal\Core\Config\StorageInterface;
 use Drupal\nimbus\config\ProxyFileStorage;
+use Drupal\nimbus\Service\DrupalStyleFactoryInterface;
 use Drupal\nimbus\Service\NimbusConfigExporterInterface;
 use Drupal\nimbus\Service\Question\QuestionFactoryInterface;
 use Symfony\Component\Console\Command\Command;
@@ -23,18 +25,25 @@ class NimbusConfigExportCommand extends Command {
   use ContainerAwareCommandTrait;
 
   /**
-   * The configuration exporter service.
-   *
-   * @var NimbusConfigExporterInterface
-   */
-  private $configExporter;
-
-  /**
    * The question factory.
    *
    * @var QuestionFactoryInterface
    */
   private $questionFactory;
+
+  /**
+   * The drupal style factory.
+   *
+   * @var DrupalStyleFactoryInterface
+   */
+  private $drupalStyleFactory;
+
+  /**
+   * The configuration exporter service.
+   *
+   * @var NimbusConfigExporterInterface
+   */
+  private $configExporter;
 
   /**
    * The file storage.
@@ -60,23 +69,27 @@ class NimbusConfigExportCommand extends Command {
   /**
    * NimbusConfigExportCommand constructor.
    *
-   * @param \Drupal\nimbus\Service\NimbusConfigExporterInterface $config_exporter
-   *    The configuration exporter service.
    * @param \Drupal\nimbus\Service\Question\QuestionFactoryInterface $question_factory
    *    The question factory.
+   * @param \Drupal\nimbus\Service\DrupalStyleFactoryInterface $drupal_style_factory
+   *    The drupal style factory.
+   * @param \Drupal\nimbus\Service\NimbusConfigExporterInterface $config_exporter
+   *    The configuration exporter service.
    * @param \Drupal\Core\Config\StorageInterface $config_active
    *    The active config storage.
    * @param \Drupal\Core\Config\StorageInterface $config_target
    *    The target config storage.
    */
   public function __construct(
-    NimbusConfigExporterInterface $config_exporter,
     QuestionFactoryInterface $question_factory,
+    DrupalStyleFactoryInterface $drupal_style_factory,
+    NimbusConfigExporterInterface $config_exporter,
     StorageInterface $config_active,
     StorageInterface $config_target
   ) {
-    $this->configExporter = $config_exporter;
     $this->questionFactory = $question_factory;
+    $this->drupalStyleFactory = $drupal_style_factory;
+    $this->configExporter = $config_exporter;
     $this->configActive = $config_active;
     $this->configTarget = $config_target;
 
@@ -185,9 +198,9 @@ class NimbusConfigExportCommand extends Command {
     }
 
     if (!$input->getArgument('accept')) {
-      /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
-      $helper = $this->getHelper('question');
-      if (!$helper->ask($input, $output, $question)) {
+      // Create a DrupalStyle object to be able to ask for user input.
+      $drupal_style = $this->drupalStyleFactory->create($input, $output);
+      if (!$drupal_style->askQuestion($question)) {
         $output->writeln('Aborted !');
         return FALSE;
       }
