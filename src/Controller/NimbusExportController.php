@@ -74,7 +74,7 @@ class NimbusExportController {
   public function configurationExport(InputInterface $input, OutputInterface $output) {
     $output->writeln('Override Export');
     // Do the actual config export operation.
-    $result = array();
+    $result = [];
 
     $config_comparer = new StorageComparer($this->configActive, $this->configTarget, $this->configManager);
 
@@ -85,7 +85,7 @@ class NimbusExportController {
 
     $output->writeln("Differences of the active config to the export directory:");
 
-    $change_list = array();
+    $change_list = [];
     foreach ($config_comparer->getAllCollectionNames() as $collection) {
       $change_list[$collection] = $config_comparer->getChangelist(NULL, $collection);
     }

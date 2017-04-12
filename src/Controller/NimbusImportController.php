@@ -83,7 +83,7 @@ class NimbusImportController {
       return TRUE;
     }
 
-    $change_list = array();
+    $change_list = [];
     foreach ($storage_comparer->getAllCollectionNames() as $collection) {
       $change_list[$collection] = $storage_comparer->getChangelist(NULL, $collection);
     }
