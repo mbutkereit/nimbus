@@ -52,6 +52,11 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
         foreach ($_nimbus_config_override_directories as $directory) {
           if (is_array($directory)) {
             if (isset($directory['path'])) {
+
+              if (in_array($directory['path'],$file_storages)) {
+                unset($file_storages[array_search($directory['path'], $file_storages)]);
+              }
+
               $readPermission = TRUE;
               $writePermission = TRUE;
               $deletePermission = TRUE;
@@ -78,9 +83,15 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
             }
           }
           elseif ($directory instanceof ConfigPath) {
+            if (in_array( (string)$directory,$file_storages)) {
+              unset($file_storages[array_search((string)$directory, $file_storages)]);
+            }
             $file_storages[] = $directory;
           }
           else {
+            if (in_array( (string)$directory,$file_storages)) {
+              unset($file_storages[array_search((string)$directory, $file_storages)]);
+            }
             $file_storages[] = new ConfigPath($directory);
           }
         }

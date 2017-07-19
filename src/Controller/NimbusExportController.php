@@ -75,6 +75,10 @@ class NimbusExportController {
     $output->writeln('Override Export');
     // Do the actual config export operation.
     $result = [];
+   
+    // This variable will be change some times in a state class, maybe
+    global $nimbus_is_export;
+    $nimbus_is_export = true;
 
     $config_comparer = new StorageComparer($this->configActive, $this->configTarget, $this->configManager);
 
