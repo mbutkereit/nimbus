@@ -15,23 +15,23 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 function nimbus_drush_command() {
 
-  $items['nimbus-cex'] = array(
+  $items['nimbus-cex'] = [
     'description' => 'Demonstrate how Drush commands work.',
-    'aliases' => array('ncex'),
+    'aliases' => ['ncex'],
     'callback' => 'nimbus_drush_export',
-  );
+  ];
 
-  $items['nimbus-cim'] = array(
+  $items['nimbus-cim'] = [
     'description' => 'Wrapper for drush cim.',
-    'aliases' => array('ncim'),
+    'aliases' => ['ncim'],
     'callback' => 'nimbus_drush_import',
-  );
+  ];
 
-  $items['nimbus-force-uuid'] = array(
+  $items['nimbus-force-uuid'] = [
     'description' => 'Update uuids.',
-    'aliases' => array('fuuid'),
+    'aliases' => ['fuuid'],
     'callback' => 'nimbus_override_ids',
-  );
+  ];
 
   return $items;
 }
