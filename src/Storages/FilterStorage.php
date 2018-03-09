@@ -16,7 +16,7 @@ class FilterStorage extends FileStorage {
    * FilterStorage file constructor.
    *
    * @param string[] $directories
-   *    Array with directories.
+   *   Array with directories.
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
@@ -81,8 +81,7 @@ class FilterStorage extends FileStorage {
       }
     }
 
-
-    if ($this->getCollectionName() == '' && $nimbus_is_export != true) {
+    if ($this->getCollectionName() == '' && $nimbus_is_export != TRUE) {
       global $_nimbus_config_override_directories_regex;
 
       if (is_array($_nimbus_config_override_directories_regex)) {
@@ -100,4 +99,5 @@ class FilterStorage extends FileStorage {
 
     return $names;
   }
+
 }

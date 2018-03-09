@@ -27,7 +27,7 @@ class ConfigPath implements ConfigPathPermissionInterface {
    * ConfigPath constructor.
    *
    * @param string $config_path
-   *    The path that should be wrapped.
+   *   The path that should be wrapped.
    */
   public function __construct($config_path) {
     $this->configPath = $config_path;
@@ -37,9 +37,9 @@ class ConfigPath implements ConfigPathPermissionInterface {
    * Add method for additional information's.
    *
    * @param string $key
-   *    The key for additional information.
+   *   The key for additional information.
    * @param mixed $info
-   *    The additional information.
+   *   The additional information.
    */
   public function addAdditionalInformation($key, $info) {
     $this->additionalInformation[$key] = $info;
@@ -49,7 +49,7 @@ class ConfigPath implements ConfigPathPermissionInterface {
    * Getter for additionalInformation.
    *
    * @return array
-   *    Return all additional information's of this path.
+   *   Return all additional information's of this path.
    */
   public function getAdditionalInformation() {
     return $this->additionalInformation;
@@ -59,10 +59,10 @@ class ConfigPath implements ConfigPathPermissionInterface {
    * Getter for the additionalInformation store.
    *
    * @param string $key
-   *    The key from that you want the value.
+   *   The key from that you want the value.
    *
    * @return mixed|null
-   *    Return the value behind the key or if the not exist null.
+   *   Return the value behind the key or if the not exist null.
    */
   public function getAdditionalInformationByKey($key) {
     return isset($this->additionalInformation[$key]) ? $this->additionalInformation[$key] : NULL;
@@ -72,7 +72,7 @@ class ConfigPath implements ConfigPathPermissionInterface {
    * Magic to string method.
    *
    * @return string
-   *    The wrapped path.
+   *   The wrapped path.
    */
   public function __toString() {
     return $this->configPath;

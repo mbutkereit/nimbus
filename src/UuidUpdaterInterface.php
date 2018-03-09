@@ -20,10 +20,10 @@ interface UuidUpdaterInterface {
    * Filter a array of config entries.
    *
    * @param \Drupal\nimbus\ConfigChange[] $entries
-   *    The array of config changes that should filtered.
+   *   The array of config changes that should filtered.
    *
    * @return \Drupal\nimbus\ConfigChange[]
-   *    The filtered config change array.
+   *   The filtered config change array.
    */
   public function filterEntries(array $entries);
 
@@ -31,7 +31,7 @@ interface UuidUpdaterInterface {
    * Return a array of ConfigChange objects.
    *
    * @return \Drupal\nimbus\ConfigChange[]
-   *    The config change objects.
+   *   The config change objects.
    */
   public function getEntries();
 
@@ -39,11 +39,11 @@ interface UuidUpdaterInterface {
    * Update config entries.
    *
    * @param string $config_name
-   *    The config name.
+   *   The config name.
    * @param array $new_data
-   *    The array with the updated data.
+   *   The array with the updated data.
    * @param string $collection
-   *    The collection string.
+   *   The collection string.
    */
   public function updateEntry($config_name, array $new_data, $collection = StorageInterface::DEFAULT_COLLECTION);
 

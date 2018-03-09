@@ -47,7 +47,7 @@ class NimbusImportController {
    * @param \Drupal\Core\Config\StorageInterface $config_target
    *   The target config storage.
    * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
-   *    The config manager.
+   *   The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
    *   The active config storage.
    */
@@ -66,7 +66,7 @@ class NimbusImportController {
    *   Output object.
    *
    * @return bool
-   *    Return false if something went wrong otherwise no return value.
+   *   Return false if something went wrong otherwise no return value.
    */
   public function configurationImport(InputInterface $input, OutputInterface $output) {
     $output->writeln('Overriden Import');
@@ -89,24 +89,9 @@ class NimbusImportController {
     }
     $this->createTable($change_list, $output);
     $helper = new QuestionHelper();
-    if (!$input->getArgument('accept')) {
-      $question = new ConfirmationQuestion("Import the listed configuration changes? \n(y/n) ", FALSE);
-      try {
-        $value = $input->getArgument('accept');
-        if ($input->isInteractive()) {
-          $input->setInteractive(!$value);
-        }
-      }
-      catch (\Exception $e) {
-        $input->setInteractive(FALSE);
-      }
-      $answer = $helper->ask($input, $output, $question);
-    }
-    else {
-      $answer = TRUE;
-    }
+    $question = new ConfirmationQuestion("Import the listed configuration changes? \n(y/n) ", !$input->isInteractive());
 
-    if ($answer) {
+    if ($helper->ask($input, $output, $question)) {
       $config_importer = new ConfigImporter(
         $storage_comparer,
         \Drupal::service('event_dispatcher'),
@@ -135,15 +120,19 @@ class NimbusImportController {
         return FALSE;
       }
     }
+    else {
+      $output->writeln('Aborted !');
+      return FALSE;
+    }
   }
 
   /**
    * Create a beautiful table.
    *
    * @param mixed $rows
-   *    Rows array from the diff.
+   *   Rows array from the diff.
    * @param \Symfony\Component\Console\Output\OutputInterface $output
-   *    The symfony console output object.
+   *   The symfony console output object.
    */
   protected function createTable($rows, OutputInterface $output) {
     $file_storage = \Drupal::service('config.storage.staging');

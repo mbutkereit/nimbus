@@ -27,7 +27,7 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
    * ModuleDirectoriesSubscriber constructor.
    *
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *    The module handler service.
+   *   The module handler service.
    */
   public function __construct(ModuleHandlerInterface $module_handler) {
     $this->moduleHandler = $module_handler;
@@ -37,7 +37,7 @@ class ModuleDirectoriesSubscriber implements EventSubscriberInterface {
    * Create for each module a configPath.
    *
    * @param \Drupal\nimbus\Events\ConfigDetectionPathEvent $event
-   *    The event object.
+   *   The event object.
    */
   public function onPreCreateFileConfigManager(ConfigDetectionPathEvent $event) {
     $file_storages = [];

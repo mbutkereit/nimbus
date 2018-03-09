@@ -13,10 +13,10 @@ interface ConfigPathPermissionInterface {
    * Validate the read permission.
    *
    * @param string $name
-   *    The name of the config file.
+   *   The name of the config file.
    *
    * @return bool
-   *    Has permission true or has no permission false.
+   *   Has permission true or has no permission false.
    */
   public function hasReadPermission($name);
 
@@ -24,12 +24,12 @@ interface ConfigPathPermissionInterface {
    * Validate the write permission.
    *
    * @param string $name
-   *    The name of the config file.
+   *   The name of the config file.
    * @param array $data
-   *    The value of the config file.
+   *   The value of the config file.
    *
    * @return bool
-   *    Has permission true or has no permission false.
+   *   Has permission true or has no permission false.
    */
   public function hasWritePermission($name, array &$data);
 
@@ -37,10 +37,10 @@ interface ConfigPathPermissionInterface {
    * Validate the delete permission.
    *
    * @param string $name
-   *    The name of the config file.
+   *   The name of the config file.
    *
    * @return bool
-   *    Has permission true or has no permission false.
+   *   Has permission true or has no permission false.
    */
   public function hasDeletePermission($name);
 

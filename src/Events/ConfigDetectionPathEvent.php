@@ -22,7 +22,7 @@ class ConfigDetectionPathEvent extends Event {
    * Getter for fileStorages.
    *
    * @return \Drupal\nimbus\config\ConfigPath[]
-   *    Return a array of ConfigPath elements.
+   *   Return a array of ConfigPath elements.
    */
   public function getFileStorages() {
     return $this->fileStorages;
@@ -32,7 +32,7 @@ class ConfigDetectionPathEvent extends Event {
    * Setter for fileStorage.
    *
    * @param \Drupal\nimbus\config\ConfigPath[] $fileStorages
-   *    The ConfigPath array that should be override the current content.
+   *   The ConfigPath array that should be override the current content.
    */
   public function setFileStorages($fileStorages) {
     $this->fileStorages = $fileStorages;
@@ -42,7 +42,7 @@ class ConfigDetectionPathEvent extends Event {
    * Add function for ConfigPath array's.
    *
    * @param \Drupal\nimbus\config\ConfigPath[] $fileStorages
-   *    The ConfigPath elements that should be added to the event.
+   *   The ConfigPath elements that should be added to the event.
    */
   public function addFileStorage(array $fileStorages) {
     foreach ($fileStorages as $fileStorage) {

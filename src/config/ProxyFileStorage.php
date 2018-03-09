@@ -16,7 +16,7 @@ class ProxyFileStorage extends FileStorage {
   /**
    * All FileStorages.
    *
-   * @var StorageInterface[]
+   * @var \Drupal\Core\Config\StorageInterface[]
    */
   private $fileStorages;
 
@@ -30,7 +30,7 @@ class ProxyFileStorage extends FileStorage {
   /**
    * The storage factory.
    *
-   * @var StorageFactory
+   * @var \Drupal\nimbus\Storage\StorageFactory
    */
   private $storageFactory;
 
@@ -38,7 +38,7 @@ class ProxyFileStorage extends FileStorage {
    * ProxyFileStorage constructor.
    *
    * @param ConfigPath[] $directories
-   *    Array with directories.
+   *   Array with directories.
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
@@ -199,7 +199,7 @@ class ProxyFileStorage extends FileStorage {
    * The active write directory.
    *
    * @return string
-   *    The current active write directories.
+   *   The current active write directories.
    *
    * @throws \Exception
    *    If the number of active write directories is less than 0.
@@ -220,10 +220,10 @@ class ProxyFileStorage extends FileStorage {
    * Returns the path to the configuration file.
    *
    * @param string $name
-   *    The name of the configuration file.
+   *   The name of the configuration file.
    *
    * @return string
-   *    The path to the configuration file.
+   *   The path to the configuration file.
    */
   public function getFilePath($name) {
     $i = 0;

@@ -13,13 +13,13 @@ class ConfigPathWithPermission extends ConfigPath implements ConfigPathPermissio
    * ConfigPathWithPermission constructor.
    *
    * @param string $config_path
-   *    The config path.
+   *   The config path.
    * @param bool $readPermission
-   *    The read permission.
+   *   The read permission.
    * @param bool $writePermission
-   *    The write permission.
+   *   The write permission.
    * @param bool $deletePermission
-   *    The delete permission.
+   *   The delete permission.
    */
   public function __construct($config_path, $readPermission = FALSE, $writePermission = FALSE, $deletePermission = FALSE) {
     parent::__construct($config_path);

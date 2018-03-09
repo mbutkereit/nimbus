@@ -6,7 +6,6 @@
  */
 
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -53,8 +52,8 @@ function nimbus_drush_command_alter(&$command) {
  */
 function nimbus_override_ids() {
   $output = new ConsoleOutput();
-  $input = new ArrayInput(['accept' => TRUE], new InputDefinition([new InputArgument('accept', InputArgument::OPTIONAL)]));
-  $input->setArgument('accept', drush_get_option('yes') ?: FALSE);
+  $input = new ArrayInput([], new InputDefinition([]));
+  $input->setInteractive((drush_get_option('yes') != NULL) ? FALSE : TRUE);
   $service = \Drupal::getContainer()->get('nimbus.nimbus_uuid');
   $service->uuidUpdateCommand($input, $output);
 }
@@ -63,15 +62,15 @@ function nimbus_override_ids() {
  * The override method for the default drush export.
  *
  * @param string $destination
- *    Optional destination folder.
+ *   Optional destination folder.
  *
  * @return array|bool|mixed
- *    The drush respone.
+ *   The drush respone.
  */
 function nimbus_drush_export($destination = NULL) {
   $output = new ConsoleOutput();
-  $input = new ArrayInput(['accept' => TRUE], new InputDefinition([new InputArgument('accept', InputArgument::OPTIONAL)]));
-  $input->setArgument('accept', drush_get_option('yes') ?: FALSE);
+  $input = new ArrayInput([], new InputDefinition([]));
+  $input->setInteractive((drush_get_option('yes') != NULL) ? FALSE : TRUE);
   $service = \Drupal::getContainer()->get('nimbus.nimbus_export');
   return $service->configurationExport($input, $output);
 }
@@ -80,15 +79,15 @@ function nimbus_drush_export($destination = NULL) {
  * The overrie method for the default drush import.
  *
  * @param string $source
- *    Optional destination folder.
+ *   Optional destination folder.
  *
  * @return array|bool|mixed
- *    The drush respone.
+ *   The drush respone.
  */
 function nimbus_drush_import($source = NULL) {
   $output = new ConsoleOutput();
-  $input = new ArrayInput(['accept' => TRUE], new InputDefinition([new InputArgument('accept', InputArgument::OPTIONAL)]));
-  $input->setArgument('accept', drush_get_option('yes') ?: FALSE);
+  $input = new ArrayInput([], new InputDefinition([]));
+  $input->setInteractive((drush_get_option('yes') != NULL) ? FALSE : TRUE);
   $service = \Drupal::getContainer()->get('nimbus.nimbus_import');
   return $service->configurationImport($input, $output);
 }

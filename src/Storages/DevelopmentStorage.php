@@ -23,7 +23,7 @@ class DevelopmentStorage extends FileStorage {
    * Redis file constructor.
    *
    * @param string[] $directories
-   *    Array with directories.
+   *   Array with directories.
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
@@ -61,9 +61,9 @@ class DevelopmentStorage extends FileStorage {
    * Add a module to white/blacklist.
    *
    * @param string $module_name
-   *    The module name.
+   *   The module name.
    * @param string $weight
-   *    The weight.
+   *   The weight.
    */
   public function addModuleToBlacklist($module_name, $weight) {
     $this->modules[$module_name] = $weight;

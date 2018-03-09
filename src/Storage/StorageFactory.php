@@ -15,14 +15,14 @@ class StorageFactory {
   /**
    * Constructs a new Storage.
    *
-   * @param ConfigPath $directory
+   * @param \Drupal\nimbus\config\ConfigPath $directory
    *   A directory path to use for reading and writing of configuration files.
    * @param string $collection
    *   The collection to store configuration in. Defaults to the
    *   default collection.
    *
    * @return \Drupal\Core\Config\StorageInterface
-   *    The created storageFactory.
+   *   The created storageFactory.
    */
   public function create(ConfigPath $directory, $collection) {
     $value = $directory->getAdditionalInformationByKey('class');

@@ -27,7 +27,7 @@ class OverrideUuidController {
    * OverrideUuidController constructor.
    *
    * @param \Drupal\nimbus\UuidUpdaterInterface $uuid_updater
-   *    The uuid updater.
+   *   The uuid updater.
    */
   public function __construct(UuidUpdaterInterface $uuid_updater) {
     $this->uuidUpdater = $uuid_updater;
@@ -37,12 +37,12 @@ class OverrideUuidController {
    * A command to update uuids.
    *
    * @param \Symfony\Component\Console\Input\InputInterface $input
-   *    The Symfony console input.
+   *   The Symfony console input.
    * @param \Symfony\Component\Console\Output\OutputInterface $output
-   *    The Symfony console output.
+   *   The Symfony console output.
    *
    * @return bool
-   *    Return false if something went wrong otherwise no return value.
+   *   Return false if something went wrong otherwise no return value.
    */
   public function uuidUpdateCommand(InputInterface $input, OutputInterface $output) {
     $result = $this->uuidUpdater->getEntries();
@@ -63,14 +63,7 @@ class OverrideUuidController {
         ->setRows($elements);
       $table->render();
       $helper = new QuestionHelper();
-      $question = new ConfirmationQuestion('You will reset the whole config, sure ?');
-      try {
-        $value = $input->getArgument('accept');
-        $input->setInteractive(!$value);
-      }
-      catch (\Exception $e) {
-        $input->setInteractive(TRUE);
-      }
+      $question = new ConfirmationQuestion('You will reset the whole config, sure ?', !$input->isInteractive());
 
       if (!$helper->ask($input, $output, $question)) {
         $output->writeln('you canceled the override.');

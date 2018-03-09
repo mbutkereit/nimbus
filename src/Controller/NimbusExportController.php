@@ -21,7 +21,7 @@ class NimbusExportController {
   /**
    * The file storage.
    *
-   * @var ProxyFileStorage
+   * @var \Drupal\nimbus\config\ProxyFileStorage
    */
   private $fileStorage;
   /**
@@ -50,7 +50,7 @@ class NimbusExportController {
    * @param \Drupal\Core\Config\StorageInterface $config_target
    *   The target config storage.
    * @param \Drupal\Core\Config\ConfigManagerInterface $config_manager
-   *    The config manager.
+   *   The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
    *   The active config storage.
    */
@@ -69,16 +69,16 @@ class NimbusExportController {
    *   Output object.
    *
    * @return array
-   *    Return successful or not
+   *   Return successful or not
    */
   public function configurationExport(InputInterface $input, OutputInterface $output) {
     $output->writeln('Override Export');
     // Do the actual config export operation.
     $result = [];
-   
-    // This variable will be change some times in a state class, maybe
+
+    // This variable will be change some times in a state class, maybe.
     global $nimbus_is_export;
-    $nimbus_is_export = true;
+    $nimbus_is_export = TRUE;
 
     $config_comparer = new StorageComparer($this->configActive, $this->configTarget, $this->configManager);
 
@@ -99,22 +99,11 @@ class NimbusExportController {
 
     $configTarget = $this->configTarget;
 
-    $question = new ConfirmationQuestion('The .yml files in your export directory (' . $this->configTarget->getWriteDirectories() . ") will be deleted and replaced with the active config. \n(y/n) ", FALSE);
-    try {
-      $value = $input->getArgument('accept');
-      if ($input->isInteractive()) {
-        $input->setInteractive(!$value);
-      }
-    }
-    catch (\Exception $e) {
-      $input->setInteractive(FALSE);
-    }
+    $question = new ConfirmationQuestion('The .yml files in your export directory (' . $this->configTarget->getWriteDirectories() . ") will be deleted and replaced with the active config. \n(y/n) ", !$input->isInteractive());
 
-    if (!$input->getArgument('accept')) {
-      if (!$helper->ask($input, $output, $question)) {
-        $output->writeln('Aborted !');
-        return FALSE;
-      }
+    if (!$helper->ask($input, $output, $question)) {
+      $output->writeln('Aborted !');
+      return FALSE;
     }
 
     // Write all .yml files.
@@ -173,9 +162,9 @@ class NimbusExportController {
    * Create a Table.
    *
    * @param array $rows
-   *    The rows of the table.
+   *   The rows of the table.
    * @param \Symfony\Component\Console\Output\OutputInterface $output
-   *    The symfony console output.
+   *   The symfony console output.
    */
   public function createTable($rows, OutputInterface $output) {
     $file_storage = $this->fileStorage;

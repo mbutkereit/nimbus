@@ -6,7 +6,7 @@ use Drupal\Core\Config\InstallStorage;
 use Drupal\nimbus\config\ConfigPath;
 use Drupal\nimbus\Events\ConfigDetectionPathEvent;
 use Drupal\nimbus\NimbusEvents;
-use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ProfileDirectorySubscriber.
@@ -19,7 +19,7 @@ class ProfileDirectorySubscriber implements EventSubscriberInterface {
    * Add the active profile to the ConfigPath array.
    *
    * @param \Drupal\nimbus\Events\ConfigDetectionPathEvent $event
-   *    The event object.
+   *   The event object.
    */
   public function onPreCreateFileConfigManager(ConfigDetectionPathEvent $event) {
     $file_storages = [];

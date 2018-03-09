@@ -6,7 +6,7 @@ use Drupal\nimbus\config\ConfigPath;
 use Drupal\nimbus\config\ConfigPathWithPermission;
 use Drupal\nimbus\Events\ConfigDetectionPathEvent;
 use Drupal\nimbus\NimbusEvents;
-use \Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConstantDirectoriesSubscriber.
@@ -39,7 +39,7 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
    *      ]
    *
    * @param \Drupal\nimbus\Events\ConfigDetectionPathEvent $event
-   *    The event object.
+   *   The event object.
    */
   public function onPreCreateFileConfigManager(ConfigDetectionPathEvent $event) {
     global $_nimbus_config_override_directories;
@@ -53,7 +53,7 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
           if (is_array($directory)) {
             if (isset($directory['path'])) {
 
-              if (in_array($directory['path'],$file_storages)) {
+              if (in_array($directory['path'], $file_storages)) {
                 unset($file_storages[array_search($directory['path'], $file_storages)]);
               }
 
@@ -83,14 +83,14 @@ class ConstantDirectoriesSubscriber implements EventSubscriberInterface {
             }
           }
           elseif ($directory instanceof ConfigPath) {
-            if (in_array( (string)$directory,$file_storages)) {
-              unset($file_storages[array_search((string)$directory, $file_storages)]);
+            if (in_array((string) $directory, $file_storages)) {
+              unset($file_storages[array_search((string) $directory, $file_storages)]);
             }
             $file_storages[] = $directory;
           }
           else {
-            if (in_array( (string)$directory,$file_storages)) {
-              unset($file_storages[array_search((string)$directory, $file_storages)]);
+            if (in_array((string) $directory, $file_storages)) {
+              unset($file_storages[array_search((string) $directory, $file_storages)]);
             }
             $file_storages[] = new ConfigPath($directory);
           }

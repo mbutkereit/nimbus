@@ -30,7 +30,7 @@ class RedisStorage extends FileStorage {
    * Redis file constructor.
    *
    * @param string[] $directories
-   *    Array with directories.
+   *   Array with directories.
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
@@ -126,7 +126,7 @@ class RedisStorage extends FileStorage {
    * Setter for redis client.
    *
    * @param \Redis $redis
-   *    Service for redis interaction.
+   *   Service for redis interaction.
    */
   public function setClient(\Redis $redis) {
     $this->redis = $redis;
@@ -136,7 +136,7 @@ class RedisStorage extends FileStorage {
    * Set the prefix for the redis entry.
    *
    * @param string $prefix
-   *    The prefix for redis hashmap.
+   *   The prefix for redis hashmap.
    */
   public function setPrefix($prefix) {
     $this->prefix = $prefix;

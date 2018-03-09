@@ -31,9 +31,9 @@ class UuidUpdater implements UuidUpdaterInterface {
    * UuidUpdater constructor.
    *
    * @param \Drupal\Core\Config\FileStorage $source_storage
-   *    The source storage for file check.
+   *   The source storage for file check.
    * @param \Drupal\Core\Database\Connection $database
-   *    The database for database check.
+   *   The database for database check.
    */
   public function __construct(FileStorage $source_storage, Connection $database) {
     $this->sourceStorage = $source_storage;
@@ -86,7 +86,7 @@ class UuidUpdater implements UuidUpdaterInterface {
    * Load all config entries.
    *
    * @return mixed
-   *    Return from database
+   *   Return from database
    */
   private function loadConfigEntries() {
     $query = $this->database->select('config', 'cf');

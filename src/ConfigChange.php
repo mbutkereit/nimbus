@@ -27,9 +27,9 @@ class ConfigChange {
    * ConfigChange constructor.
    *
    * @param array $active
-   *    The active config.
+   *   The active config.
    * @param array $staging
-   *    The staged config.
+   *   The staged config.
    */
   public function __construct(array $active, array $staging) {
     $this->active = $active;
@@ -40,7 +40,7 @@ class ConfigChange {
    * Getter for staging config.
    *
    * @return array
-   *    Return staging config array.
+   *   Return staging config array.
    */
   public function getStagingConfig() {
     return $this->staging;
@@ -50,7 +50,7 @@ class ConfigChange {
    * Getter for active config.
    *
    * @return array
-   *    Return active config array.
+   *   Return active config array.
    */
   public function getActiveConfig() {
     return $this->active;
@@ -60,7 +60,7 @@ class ConfigChange {
    * Getter for active uuid.
    *
    * @return bool|string
-   *    Return staging uuid or false if nothing exist.
+   *   Return staging uuid or false if nothing exist.
    */
   public function getActiveUuid() {
     if (isset($this->active['uuid'])) {
@@ -73,7 +73,7 @@ class ConfigChange {
    * Getter for staging uuid.
    *
    * @return bool|string
-   *    Return staging uuid or false if nothing exist.
+   *   Return staging uuid or false if nothing exist.
    */
   public function getStagingUuid() {
     if (isset($this->staging['uuid'])) {
@@ -86,7 +86,7 @@ class ConfigChange {
    * Check if uuid not equal.
    *
    * @return bool
-   *    Is uuid not equivalent true.
+   *   Is uuid not equivalent true.
    */
   public function isUuidNotEquivalent() {
     $response = FALSE;
