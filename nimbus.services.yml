@@ -9,7 +9,7 @@ services:
 
   nimbus.nimbus_export:
     class:  Drupal\nimbus\Controller\NimbusExportController
-    arguments: ['@config.storage.staging','@config.manager','@config.storage']
+    arguments: ['@config.storage.staging','@config.manager','@config.storage','@nimbus.storage.proxy']
   nimbus.nimbus_import:
     class:  Drupal\nimbus\Controller\NimbusImportController
     arguments: ['@config.storage.staging','@config.manager','@config.storage']
@@ -25,3 +25,7 @@ services:
     class: Drupal\nimbus\EventSubscriber\FileDetection\ConstantDirectoriesSubscriber
     tags:
       - { name: event_subscriber }
+
+  nimbus.storage.proxy:
+    class: Drupal\nimbus\config\ProxyFileStorage
+    factory: Drupal\nimbus\config\FileStorageFactoryAlter::getSync

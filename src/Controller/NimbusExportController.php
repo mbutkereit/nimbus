@@ -53,11 +53,14 @@ class NimbusExportController {
    *   The config manager.
    * @param \Drupal\Core\Config\StorageInterface $config_active
    *   The active config storage.
+   * @param \Drupal\nimbus\config\ProxyFileStorage $file_storage
+   *   The file storage.
    */
-  public function __construct(StorageInterface $config_target, ConfigManagerInterface $config_manager, StorageInterface $config_active) {
+  public function __construct(StorageInterface $config_target, ConfigManagerInterface $config_manager, StorageInterface $config_active, ProxyFileStorage $file_storage) {
     $this->configTarget = $config_target;
     $this->configManager = $config_manager;
     $this->configActive = $config_active;
+    $this->fileStorage = $file_storage;
   }
 
   /**
@@ -98,8 +101,9 @@ class NimbusExportController {
     $helper = new QuestionHelper();
 
     $configTarget = $this->configTarget;
+    $fileStorage = $this->fileStorage;
 
-    $question = new ConfirmationQuestion('The .yml files in your export directory (' . $this->configTarget->getWriteDirectories() . ") will be deleted and replaced with the active config. \n(y/n) ", !$input->isInteractive());
+    $question = new ConfirmationQuestion('The .yml files in your export directory (' . $fileStorage->getWriteDirectories() . ") will be deleted and replaced with the active config. \n(y/n) ", !$input->isInteractive());
 
     if (!$helper->ask($input, $output, $question)) {
       $output->writeln('Aborted !');
@@ -154,7 +158,7 @@ class NimbusExportController {
       }
     }
 
-    $output->writeln('Configuration successfully exported to ' . $this->configTarget->getWriteDirectories() . ". \n");
+    $output->writeln('Configuration successfully exported to ' . $fileStorage->getWriteDirectories() . ". \n");
 
   }
 
@@ -167,7 +171,7 @@ class NimbusExportController {
    *   The symfony console output.
    */
   public function createTable($rows, OutputInterface $output) {
-    $file_storage = $this->fileStorage;
+    $fileStorage = $this->fileStorage;
     $headers = ['Collection', 'Config', 'Operation'];
     $elements = [];
 
@@ -184,7 +188,7 @@ class NimbusExportController {
             $key,
           ];
           if ($file_storage instanceof ProxyFileStorage) {
-            $path = ($key == 'delete') ? $file_storage->getFilePath($config_name) : $file_storage->getWriteDirectories();
+            $path = ($key == 'delete') ? $file_storage->getFilePath($config_name) : $fileStorage->getWriteDirectories();
             $element[] = $path;
           }
           $elements[] = $element;
